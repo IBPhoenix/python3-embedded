@@ -265,7 +265,8 @@ to real source files rather than relying on archive symlinks.
 The script does not change package metadata. When preparing a new Firebird
 version, update `src/firebird/embedded/__about__.py` and the
 `tool.firebird-embedded.firebird-version` value in `pyproject.toml` before
-building wheels so metadata matches the bundled runtime.
+building wheels so metadata matches the bundled runtime. Also update `tool.hatch.build.directory`
+with new Firebird version so produced wheels are stored in separate directory.
 
 ## Wheel Structure
 
