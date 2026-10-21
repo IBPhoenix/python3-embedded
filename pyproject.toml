@@ -1,0 +1,96 @@
+[build-system]
+requires = [
+    "hatchling>=1.27",
+]
+build-backend = "hatchling.build"
+
+
+[project]
+name = "firebird-embedded"
+dynamic = ["version"]
+
+description = "Firebird embedded runtime packaged as wheels for Python applications"
+readme = "README.md"
+requires-python = ">=3.11"
+
+license = { file = "LICENSE" }
+authors = [
+  { name = "Pavel Cisar", email = "pcisar@users.sourceforge.net"},
+]
+
+keywords = [
+    "firebird",
+    "database",
+    "embedded",
+    "runtime",
+]
+
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "License :: OSI Approved",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Database",
+]
+
+dependencies = [
+]
+
+
+[project.urls]
+Home = "https://github.com/FirebirdSQL/python3-embedded"
+Issues = "https://github.com/FirebirdSQL/python3-embedded/issues"
+Documentation = "https://firebirdsql.org/"
+Source = "https://github.com/FirebirdSQL/python3-embedded"
+
+
+# Runtime provider advertised to firebird-driver and other consumers.
+#
+# EntryPoint.load() returns the provider class itself. The consumer
+# instantiates it when required.
+[project.entry-points."firebird.runtime.providers"]
+firebird = "firebird.embedded.provider:FirebirdProvider"
+
+
+# ---------------------------------------------------------------------------
+# Hatch
+# ---------------------------------------------------------------------------
+
+[tool.hatch.version]
+path = "src/firebird/embedded/__about__.py"
+
+
+[tool.hatch.build]
+directory = "dist"
+
+
+[tool.hatch.build.targets.wheel]
+
+# `firebird` itself is an implicit namespace package. Hatchling should include
+# only this distribution's package tree.
+packages = ["src/firebird"]
+
+
+# The custom hook:
+#
+# - reads FIREBIRD_EMBEDDED_TARGET
+# - selects a previously prepared, versioned runtime
+# - adds it through build_data["force_include"]
+# - sets build_data["pure_python"] = false
+# - sets the platform-specific build_data["tag"]
+[tool.hatch.build.targets.wheel.hooks.custom]
+path = "hatch_build.py"
+
+# ---------------------------------------------------------------------------
+# firebird-embedded build configuration
+# ---------------------------------------------------------------------------
+
+[tool.firebird-embedded]
+build-enabled = false # No Firebird release is configured on main.
+
+# Base directory may be overridden with FIREBIRD_EMBEDDED_BINARY_ROOT.
+binary-root = "firebird-binaries"
