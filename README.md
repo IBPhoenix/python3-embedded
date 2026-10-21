@@ -93,8 +93,9 @@ installs all configured targets together, with rollback on failure.
 For a new Firebird release, update the first three components of
 `src/firebird/embedded/__about__.py` and the
 `tool.firebird-embedded.firebird-version` setting in `pyproject.toml` before
-building wheels. Update archive suffixes and branch-local manifests if an upstream
-kit changes. `make_embedded.py` does not edit package metadata.
+building wheels. Also update `tool.hatch.build.directory` with new Firebird version so
+produced wheels are stored in separate directory. Update archive suffixes and branch-local
+manifests if an upstream kit changes. `make_embedded.py` does not edit package metadata.
 
 ## Build wheels
 

@@ -42,10 +42,10 @@ dependencies = [
 
 
 [project.urls]
-Home = "https://github.com/FirebirdSQL/python3-embedded"
-Issues = "https://github.com/FirebirdSQL/python3-embedded/issues"
-Documentation = "https://firebirdsql.org/"
-Source = "https://github.com/FirebirdSQL/python3-embedded"
+Home = "https://www.ibphoenix.com/"
+Issues = "https://github.com/IBPhoenix/python3-embedded/issues"
+Documentation = "https://www.firebirdsql.org/"
+Source = "https://github.com/IBPhoenix/python3-embedded/tree/fb-4.0"
 
 
 # Runtime provider advertised to firebird-driver and other consumers.
