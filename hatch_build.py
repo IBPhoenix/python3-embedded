@@ -92,7 +92,7 @@ class CustomBuildHook(BuildHookInterface):
         client = (
             "fbclient.dll"
             if target_name.startswith("win")
-            else f"libfbclient.so.{firebird_version}"
+            else "libfbclient.so.2"
         )
         if not (source_dir / client).is_file():
             raise RuntimeError(f"Client library is missing: {source_dir / client}")
