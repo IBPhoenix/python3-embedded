@@ -105,13 +105,13 @@ binary-root = "firebird-binaries"
 
 [tool.firebird-embedded.targets.linux32]
 directory = "linux32"
-wheel-tag = "py3-none-linux_i686"
+wheel-tag = "py3-none-manylinux_2_12_i686"
 archive-suffix = ".i686.tar.gz"
 
 
 [tool.firebird-embedded.targets.linux64]
 directory = "linux64"
-wheel-tag = "py3-none-linux_x86_64"
+wheel-tag = "py3-none-manylinux_2_17_x86_64"
 archive-suffix = ".amd64.tar.gz"
 
 
