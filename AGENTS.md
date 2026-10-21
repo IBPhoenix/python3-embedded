@@ -265,7 +265,8 @@ to real source files rather than relying on archive symlinks.
 The script does not change package metadata. When preparing a new Firebird
 version, update `src/firebird/embedded/__about__.py` and the
 `tool.firebird-embedded.firebird-version` value in `pyproject.toml` before
-building wheels so metadata matches the bundled runtime.
+building wheels so metadata matches the bundled runtime. Also update `tool.hatch.build.directory`
+with new Firebird version so produced wheels are stored in separate directory.
 
 ## Wheel Structure
 
@@ -313,10 +314,10 @@ Examples:
 ```text
 py3-none-win32
 py3-none-win_amd64
-py3-none-linux_i686
-py3-none-linux_x86_64
-py3-none-linux_armv7l
-py3-none-linux_aarch64
+py3-none-manylinux_2_26_i686
+py3-none-manylinux_2_17_x86_64
+py3-none-manylinux_2_17_armv7l
+py3-none-manylinux_2_17_aarch64
 ```
 
 Do not generate CPython-specific tags such as:
@@ -539,8 +540,6 @@ Tests that actually load or use embedded Firebird are stronger than tests that m
 ## Package Registry
 
 Hatch is configured to use `uv` as its installer.
-
-Private package registry behavior should be configured through Hatch configuration, not by modifying global pip configuration.
 
 Do not assume pip is used internally.
 
