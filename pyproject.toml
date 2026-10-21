@@ -1,0 +1,180 @@
+[build-system]
+requires = [
+    "hatchling>=1.27",
+]
+build-backend = "hatchling.build"
+
+
+[project]
+name = "firebird-embedded"
+dynamic = ["version"]
+
+description = "Firebird embedded runtime packaged as wheels for Python applications"
+readme = "README.md"
+requires-python = ">=3.11"
+
+license = { file = "LICENSE" }
+authors = [
+  { name = "Pavel Cisar", email = "pcisar@users.sourceforge.net"},
+]
+
+keywords = [
+    "firebird",
+    "database",
+    "embedded",
+    "runtime",
+]
+
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "License :: OSI Approved",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Database",
+]
+
+dependencies = [
+]
+
+
+[project.urls]
+Home = "https://github.com/FirebirdSQL/python3-embedded"
+Issues = "https://github.com/FirebirdSQL/python3-embedded/issues"
+Documentation = "https://firebirdsql.org/"
+Source = "https://github.com/FirebirdSQL/python3-embedded"
+
+
+# Runtime provider advertised to firebird-driver and other consumers.
+#
+# EntryPoint.load() returns the provider class itself. The consumer
+# instantiates it when required.
+[project.entry-points."firebird.runtime.providers"]
+firebird = "firebird.embedded.provider:FirebirdProvider"
+
+
+# ---------------------------------------------------------------------------
+# Hatch
+# ---------------------------------------------------------------------------
+
+[tool.hatch.version]
+path = "src/firebird/embedded/__about__.py"
+
+
+[tool.hatch.build]
+directory = "dist/5.0.4"
+
+
+[tool.hatch.build.targets.wheel]
+
+# `firebird` itself is an implicit namespace package. Hatchling should include
+# only this distribution's package tree.
+packages = ["src/firebird"]
+
+
+# The custom hook:
+#
+# - reads FIREBIRD_EMBEDDED_TARGET
+# - selects a previously prepared, versioned runtime
+# - adds it through build_data["force_include"]
+# - sets build_data["pure_python"] = false
+# - sets the platform-specific build_data["tag"]
+[tool.hatch.build.targets.wheel.hooks.custom]
+path = "hatch_build.py"
+
+[tool.hatch.envs.default.env-vars]
+FIREBIRD_EMBEDDED_TARGET = "linux64"
+
+[tool.hatch.envs.smoke]
+dev-mode = false
+
+# ---------------------------------------------------------------------------
+# firebird-embedded build configuration
+# ---------------------------------------------------------------------------
+
+[tool.firebird-embedded]
+firebird-version = "5.0.4"
+build-enabled = true
+
+# Base directory may be overridden with FIREBIRD_EMBEDDED_BINARY_ROOT.
+binary-root = "firebird-binaries"
+
+
+[tool.firebird-embedded.targets.linux32]
+directory = "linux32"
+wheel-tag = "py3-none-linux_i686"
+archive-suffix = "-linux-x86.tar.gz"
+
+
+[tool.firebird-embedded.targets.linux64]
+directory = "linux64"
+wheel-tag = "py3-none-linux_x86_64"
+archive-suffix = "-linux-x64.tar.gz"
+
+
+[tool.firebird-embedded.targets.linux32-arm]
+directory = "linux32-arm"
+wheel-tag = "py3-none-linux_armv7l"
+archive-suffix = "-linux-arm32.tar.gz"
+
+
+[tool.firebird-embedded.targets.linux64-arm]
+directory = "linux64-arm"
+wheel-tag = "py3-none-linux_aarch64"
+archive-suffix = "-linux-arm64.tar.gz"
+
+
+[tool.firebird-embedded.targets.win32]
+directory = "win32"
+wheel-tag = "py3-none-win32"
+archive-suffix = "-windows-x86.zip"
+
+
+[tool.firebird-embedded.targets.win64]
+directory = "win64"
+wheel-tag = "py3-none-win_amd64"
+archive-suffix = "-windows-x64.zip"
+
+
+# ---------------------------------------------------------------------------
+# Hatch environments
+# ---------------------------------------------------------------------------
+
+[tool.hatch.envs.default]
+dependencies = [
+]
+
+
+# Useful convenience scripts. The actual target is communicated to the
+# Hatchling hook through FIREBIRD_EMBEDDED_TARGET.
+#
+# These can all be executed on the same build machine because the binary
+# payload is pre-built; the build process only assembles wheels.
+[tool.hatch.envs.default.scripts]
+
+linux32 = [
+    "FIREBIRD_EMBEDDED_TARGET=linux32 hatch build -t wheel",
+]
+
+linux64 = [
+    "FIREBIRD_EMBEDDED_TARGET=linux64 hatch build -t wheel",
+]
+
+linux32-arm = [
+    "FIREBIRD_EMBEDDED_TARGET=linux32-arm hatch build -t wheel",
+]
+
+linux64-arm = [
+    "FIREBIRD_EMBEDDED_TARGET=linux64-arm hatch build -t wheel",
+]
+
+win32 = [
+    "FIREBIRD_EMBEDDED_TARGET=win32 hatch build -t wheel",
+]
+
+win64 = [
+    "FIREBIRD_EMBEDDED_TARGET=win64 hatch build -t wheel",
+]
