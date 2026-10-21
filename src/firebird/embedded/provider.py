@@ -48,7 +48,7 @@ class FirebirdProvider:
         if sys.platform == "win32":
             path = self.root / "fbclient.dll"
         elif sys.platform.startswith("linux"):
-            path = self.root / f"libfbclient.so.{self.firebird_version}"
+            path = self.root / "libfbclient.so.2"
         else:
             raise RuntimeError(
                 f"Unsupported platform: {sys.platform}"

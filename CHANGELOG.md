@@ -4,6 +4,15 @@ All notable changes to `firebird-embedded` are recorded here. Package versions
 use the Firebird release as their first three components and a packaging revision
 as the fourth.
 
+## [4.0.7.3] - 2026-10-21
+
+### Fixed
+
+- Package the Linux client once as `libfbclient.so.2`, matching the SONAME
+  required by Firebird's embedded engine, plugins, and internationalization module.
+- Use PyPI-accepted Linux wheel tags based on the bundled binaries' glibc
+  symbol floors and document Firebird's external runtime requirements.
+
 ## [4.0.7.2] - 2026-10-15
 
 ### Added

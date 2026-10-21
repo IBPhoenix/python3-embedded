@@ -24,6 +24,20 @@ The wheels have `py3-none-<platform>` tags because the native files do not
 depend on a particular Python ABI. A build host can assemble wheels for other
 platforms from their prebuilt Firebird archives.
 
+## Native runtime requirements
+
+The Linux wheels use `manylinux_2_17_i686` and `manylinux_2_17_x86_64` tags
+so PyPI accepts them and installers select the matching architecture and glibc
+version. Firebird 4 also requires the target system to provide
+`libtommath.so.0` and its dependencies. This library is not bundled in the
+wheels. Install the distribution package supplying it before using the
+embedded runtime; a matching `manylinux` tag alone does not establish that it
+is present.
+
+The Windows wheels include `msvcp140.dll` and the required ICU DLLs. The
+supplied Firebird binaries also import `VCRUNTIME140.dll` and Universal CRT
+components, which must be available on the target system.
+
 The package version has four components:
 `<Firebird major>.<minor>.<revision>.<packaging revision>`. The first three
 components must match the bundled Firebird release. The version is stored in
@@ -89,8 +103,6 @@ From the repository root, run one Hatch script per target:
 ```bash
 hatch run linux32
 hatch run linux64
-hatch run linux32-arm
-hatch run linux64-arm
 hatch run win32
 hatch run win64
 ```
