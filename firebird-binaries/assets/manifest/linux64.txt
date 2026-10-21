@@ -1,0 +1,12 @@
+firebird.conf=opt/firebird/firebird.conf
+firebird.msg=opt/firebird/firebird.msg
+intl/fbintl=opt/firebird/intl/fbintl
+intl/fbintl.conf=opt/firebird/intl/fbintl.conf
+libfbclient.so.{0}.{1}.{2}=opt/firebird/lib/libfbclient.so.{0}.{1}.{2}
+libib_util.so=opt/firebird/lib/libib_util.so
+plugins.conf=opt/firebird/plugins.conf
+plugins/libEngine{0}.so=opt/firebird/plugins/libEngine{0}.so
+plugins/libSrp.so=opt/firebird/plugins/libSrp.so
+plugins/libudr_engine.so=opt/firebird/plugins/libudr_engine.so
+plugins/udr_engine.conf=opt/firebird/plugins/udr_engine.conf
+plugins/libfbtrace.so=opt/firebird/plugins/libfbtrace.so
